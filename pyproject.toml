@@ -1,0 +1,9 @@
+[project]
+name = "neurona-riego-plantas"
+version = "0.1.0"
+description = "Neurona artificial con activación sigmoide que decide si una planta necesita riego según la humedad del suelo y la temperatura."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.5.3",
+]
