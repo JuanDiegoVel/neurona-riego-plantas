@@ -1,0 +1,84 @@
+Neurona artificial que decide si una planta necesita riego
+Entradas 
+ [[80. 18.]
+ [70. 22.]
+ [65. 28.]
+ [55. 25.]
+ [50. 32.]
+ [40. 30.]
+ [35. 25.]
+ [30. 32.]
+ [20. 35.]
+ [10. 38.]]
+Respuestas esperadas: 
+ [0. 0. 0. 0. 0. 1. 1. 1. 1. 1.]
+
+Datos normalizados:
+[[0.8  0.36]
+ [0.7  0.44]
+ [0.65 0.56]
+ [0.55 0.5 ]
+ [0.5  0.64]
+ [0.4  0.6 ]
+ [0.35 0.5 ]
+ [0.3  0.64]
+ [0.2  0.7 ]
+ [0.1  0.76]]
+
+Entrenamiento base: tasa 0.5, 10000 épocas
+Epoca     0 | error: 0.2468
+Epoca  1000 | error: 0.0675
+Epoca  2000 | error: 0.0497
+Epoca  3000 | error: 0.0408
+Epoca  4000 | error: 0.0350
+Epoca  5000 | error: 0.0308
+Epoca  6000 | error: 0.0275
+Epoca  7000 | error: 0.0250
+Epoca  8000 | error: 0.0229
+Epoca  9000 | error: 0.0211
+
+Peso humedad: -19.5032
+Peso temperatura: 2.3101
+Sesgo: 7.4022
+Error final: 0.019645
+
+Probamos lo aprendido:
+Si la probabilidad es >= 0.5 = 1 (regar)
+Si es < 0.5 = 0 (no regar)
+[80 18] -> probabilidad 0.0006 -> respuesta: 0
+[70 22] -> probabilidad 0.0053 -> respuesta: 0
+[65 28] -> probabilidad 0.0183 -> respuesta: 0
+[55 25] -> probabilidad 0.1025 -> respuesta: 0
+[50 32] -> probabilidad 0.2951 -> respuesta: 0
+[40 30] -> probabilidad 0.7285 -> respuesta: 1
+[35 25] -> probabilidad 0.8496 -> respuesta: 1
+[30 32] -> probabilidad 0.9539 -> respuesta: 1
+[20 35] -> probabilidad 0.9941 -> respuesta: 1
+[10 38] -> probabilidad 0.9993 -> respuesta: 1
+
+Signo de los pesos:
+Peso humedad -19.5032: si la humedad aumenta, la probabilidad de regar baja
+Peso temperatura +2.3101: si la temperatura aumenta, la probabilidad de regar sube
+
+Condiciones nuevas:
+75% 30°C -> probabilidad 0.0029 -> 0 (no regar)
+45% 34°C -> probabilidad 0.5490 -> 1 (regar)
+25% 22°C -> probabilidad 0.9719 -> 1 (regar)
+50% 25°C -> probabilidad 0.2325 -> 0 (no regar)
+30% 40°C -> probabilidad 0.9677 -> 1 (regar)
+
+Experimentos:
+Prueba               Épocas  Tasa Error final Correctas P(45%,34°C)  Aprendizaje
+Prueba base           10000   0.5    0.019645     10/10      0.5490  rápido
+Pocas épocas            100   0.5    0.165623     10/10      0.5217  insuficiente
+Cantidad intermedia    1000   0.5    0.067481     10/10      0.5793  insuficiente
+Más épocas            20000   0.5    0.011705     10/10      0.5263  rápido
+Tasa pequeña          10000  0.01    0.130048     10/10      0.5388  insuficiente
+Tasa moderada         10000   0.1    0.049728     10/10      0.5853  lento
+Tasa alta             10000   1.0    0.011705     10/10      0.5263  rápido
+Tasa muy alta         10000   2.0    0.006566     10/10      0.5082  rápido
+
+Comparación de umbrales (sin volver a entrenar):
+Umbral 0.4: entrenamiento [0 0 0 0 0 1 1 1 1 1] (10/10) | nuevos [0 1 1 0 1]
+Umbral 0.5: entrenamiento [0 0 0 0 0 1 1 1 1 1] (10/10) | nuevos [0 1 1 0 1]
+Umbral 0.6: entrenamiento [0 0 0 0 0 1 1 1 1 1] (10/10) | nuevos [0 0 1 0 1]
